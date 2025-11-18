@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <title>PDF Chatbot</title>
+        <style>
+            body { font-family: Arial; margin: 40px; }
+            #chatbox { border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; border-radius: 8px; }
+            .msg { margin: 5px 0; padding: 8px; border-radius: 6px; max-width: 80%; }
+            .user { background-color: #daf0ff; align-self: flex-end; }
+            .bot { background-color: #eaeaea; }
+            input, button { margin-top: 10px; }
+        </style>
+    </head>
+
+    <body>
+        <h2>Chat with your pdf </h2>
+        <form id="uploadform">
+            <input type="file" name="file" accept="application/pdf" required>
+            <button type="submit">Upload PDF</button>
+        </form>
+        
+        <div id="status"></div>
+
+        
+        <div id="chatContainer" style="display:none;">
+            <div id="chatbox"></div>
+            <form id="chatForm">
+                <input type="text" id="query" placeholder="Ask something..." size="60" required>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+        
+        <script>
+        
+        const chatbox = document.getElementById("chatbox");
+            //handle the upload file
+            document.getElementById("uploadform").addEventListener("submit",async(e)=>{
+                e.preventDefault();
+                const formData=new FormData(e.target)
+                const res = await fetch("/upload_pdf", { method: "POST", body: formData });
+                const data = await res.json();
+            document.getElementById("status").innerText = data.message || data.error;
+                if (res.ok) {
+                document.getElementById("queryForm").style.display = "block";
+            }
+            })
+
+        // Send query
+        document.getElementById("chatForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const query = document.getElementById("query").value.trim();
+            if (!query) return;
+
+            addMessage(query, "user");
+            document.getElementById("query").value = "";
+
+            const res = await fetch("/ask", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query })
+            });
+
+            const data = await res.json();
+            addMessage(data.answer || data.error, "bot");
+        });
+
+        function addMessage(text, sender) {
+            const div = document.createElement("div");
+            div.className = "msg " + sender;
+            div.innerText = text;
+            chatbox.appendChild(div);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+            
+        </script>
+
+    </body>
+</html>
