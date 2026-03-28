@@ -1,4 +1,4 @@
-# WakeelSahab — AI-Powered Legal Assistant for Indian Lawyers
+# WakeelSahab (Legal Assistant for Indian Lawyers)
 
 ---
 
@@ -22,6 +22,10 @@ There is no single tool that handles both. Lawyers are forced to juggle legal da
 - **PDF upload** → upload a legal document and ask questions about it (prototype stage)
 
 The interface is minimal and professional — black background, yellow accents — built to feel like a lawyer's tool, not a toy.
+<img width="1896" height="921" alt="image" src="https://github.com/user-attachments/assets/cdb14ec1-b4fb-46e8-8250-08bf1a8f6218" />
+<img width="1409" height="921" alt="image" src="https://github.com/user-attachments/assets/f654411c-aee5-4d19-8c91-af0df37b5b72" />
+<img width="1214" height="900" alt="image" src="https://github.com/user-attachments/assets/21787b9a-6310-4f80-b02c-a36673765089" />
+
 
 ---
 
